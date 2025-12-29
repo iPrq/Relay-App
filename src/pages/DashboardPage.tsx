@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 
 interface DashboardPageProps {
-  onNavigate: (page: 'landing' | 'login' | 'register' | 'dashboard') => void;
+  onNavigate: (page: 'landing' | 'login' | 'register' | 'dashboard' | 'forgot-password') => void;
 }
 
 interface Message {
@@ -32,10 +32,10 @@ interface ChatMessage {
   isSent: boolean;
 }
 
-interface TeamMember {
+interface GroupMember {
   id: number;
   name: string;
-  role: string;
+  status: string;
 }
 
 interface FileItem {
@@ -70,13 +70,13 @@ const chatMessages: ChatMessage[] = [
   { id: 12, content: 'Message content goes here', isSent: false },
 ];
 
-const teamMembers: TeamMember[] = [
-  { id: 1, name: 'Full name here', role: 'Job Description here' },
-  { id: 2, name: 'Full name here', role: 'Job Description here' },
-  { id: 3, name: 'Full name here', role: 'Job Description here' },
-  { id: 4, name: 'Full name here', role: 'Job Description here' },
-  { id: 5, name: 'Full name here', role: 'Job Description here' },
-  { id: 6, name: 'Full name here', role: 'Job Description here' },
+const teamMembers: GroupMember[] = [
+  { id: 1, name: 'Full name here', status: 'Active' },
+  { id: 2, name: 'Full name here', status: 'Busy' },
+  { id: 3, name: 'Full name here', status: 'Offline' },
+  { id: 4, name: 'Full name here', status: 'Away' },
+  { id: 5, name: 'Full name here', status: 'In Meeting' },
+  { id: 6, name: 'Full name here', status: 'Do Not Disturb' },
 ];
 
 const files: FileItem[] = [
@@ -192,6 +192,17 @@ export default function DashboardPage({ onNavigate }: DashboardPageProps) {
             </div>
           ))}
         </div>
+
+        {/* Current User */}
+        <div className="px-4 py-4 border-t border-gray-100 flex items-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-[#a727ce] text-white flex items-center justify-center font-['Poppins',sans-serif] font-semibold leading-none">
+            T
+          </div>
+          <div className="flex flex-col justify-center leading-tight">
+            <span className="font-['Poppins',sans-serif] font-semibold text-[14px] leading-[18px] text-black">Test</span>
+            <span className="font-['Poppins',sans-serif] text-[12px] leading-[16px] text-[rgba(0,0,0,0.45)]">Your Status</span>
+          </div>
+        </div>
       </div>
 
       {/* Main Chat Area */}
@@ -267,10 +278,10 @@ export default function DashboardPage({ onNavigate }: DashboardPageProps) {
         </div>
 
         <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-          {/* Team Members Section */}
+          {/* Group Members Section */}
           <div className="p-6 border-b border-gray-100">
             <div className="flex items-center gap-2 mb-4">
-              <p className="font-['Poppins',sans-serif] font-semibold text-[14px]">Team Members</p>
+              <p className="font-['Poppins',sans-serif] font-semibold text-[14px]">Group Members</p>
               <div className="bg-[#edf2f7] px-2 py-0.5 rounded-full">
                 <span className="font-['Metropolis',sans-serif] font-semibold text-[12px]">6</span>
               </div>
@@ -282,7 +293,7 @@ export default function DashboardPage({ onNavigate }: DashboardPageProps) {
                   <div className="flex-1 min-w-0">
                     <p className="font-['Metropolis',sans-serif] font-semibold text-[14px] truncate">{member.name}</p>
                     <p className="font-['Metropolis',sans-serif] text-[12px] text-gray-400 truncate">
-                      {member.role}
+                      Status: {member.status}
                     </p>
                   </div>
                 </div>
@@ -290,10 +301,10 @@ export default function DashboardPage({ onNavigate }: DashboardPageProps) {
             </div>
           </div>
 
-          {/* Team Members Section (Duplicate as shown in design) */}
+          {/* Group Members Section (Duplicate as shown in design) */}
           <div className="p-6">
             <div className="flex items-center gap-2 mb-4">
-              <p className="font-['Poppins',sans-serif] font-semibold text-[14px]">Team Members</p>
+              <p className="font-['Poppins',sans-serif] font-semibold text-[14px]">Group Members</p>
               <div className="bg-[#edf2f7] px-2 py-0.5 rounded-full">
                 <span className="font-['Metropolis',sans-serif] font-semibold text-[12px]">6</span>
               </div>
