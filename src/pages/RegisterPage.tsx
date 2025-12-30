@@ -9,8 +9,8 @@ interface RegisterPageProps {
 
 export default function RegisterPage({ onNavigate }: RegisterPageProps) {
   const [formData, setFormData] = useState({
-    email1: '',
-    email2: '',
+    email: '',
+    email: '',
     password: '',
     agreeToTerms: false
   });
@@ -55,13 +55,13 @@ export default function RegisterPage({ onNavigate }: RegisterPageProps) {
               className="mb-5"
             >
               <label className="block font-['Inter',sans-serif] text-[#1e1e1e] text-[16px] mb-2">
-                Email
+                Username
               </label>
               <input
-                type="email"
-                value={formData.email1}
-                onChange={(e) => setFormData({ ...formData, email1: e.target.value })}
-                placeholder="Enter your email"
+                type="text"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="Enter your username"
                 className="w-full bg-white border border-[#d9d9d9] rounded-[8px] px-4 py-3 font-['Inter',sans-serif] text-[16px] text-[#1e1e1e] placeholder:text-[#b3b3b3] focus:outline-none focus:ring-2 focus:ring-[#a727ce] transition-all duration-300"
               />
             </motion.div>
@@ -78,9 +78,9 @@ export default function RegisterPage({ onNavigate }: RegisterPageProps) {
               </label>
               <input
                 type="email"
-                value={formData.email2}
-                onChange={(e) => setFormData({ ...formData, email2: e.target.value })}
-                placeholder="Confirm your email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="Enter your email"
                 className="w-full bg-white border border-[#d9d9d9] rounded-[8px] px-4 py-3 font-['Inter',sans-serif] text-[16px] text-[#1e1e1e] placeholder:text-[#b3b3b3] focus:outline-none focus:ring-2 focus:ring-[#a727ce] transition-all duration-300"
               />
             </motion.div>
@@ -135,10 +135,10 @@ export default function RegisterPage({ onNavigate }: RegisterPageProps) {
                 </div>
                 <div className="flex-1">
                   <div className="font-['Inter',sans-serif] text-[#1e1e1e] text-[16px] leading-relaxed">
-                    Label
+                    I agree to the <span className="text-[#a727ce] underline">Terms of Service</span> and <span className="text-[#a727ce] underline">Privacy Policy</span>
                   </div>
                   <div className="font-['Inter',sans-serif] text-[#757575] text-[16px] leading-relaxed">
-                    Description
+                    
                   </div>
                 </div>
               </label>
