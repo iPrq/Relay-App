@@ -1,4 +1,5 @@
 import svgPaths from "../imports/svg-2qeczk8x7z";
+import { motion } from 'motion/react';
 
 export function LogoIcon() {
   return (
@@ -20,7 +21,9 @@ export function LogoIcon() {
 
 export function Logo({ onClick }: { onClick?: () => void }) {
   return (
-    <div 
+    <motion.div 
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
       className="flex items-center gap-[10px] cursor-pointer" 
       onClick={onClick}
     >
@@ -28,6 +31,6 @@ export function Logo({ onClick }: { onClick?: () => void }) {
       <p className="font-['Poppins',sans-serif] font-bold text-[20px] leading-[20px] text-[#2d2d2d] uppercase">
         Relay
       </p>
-    </div>
+    </motion.div>
   );
 }

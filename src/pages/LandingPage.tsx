@@ -1,8 +1,9 @@
 import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
+import { motion } from 'motion/react';
 
 interface LandingPageProps {
-  onNavigate: (page: 'landing' | 'login' | 'register' | 'dashboard') => void;
+  onNavigate: (page: 'landing' | 'login' | 'register' | 'dashboard' | 'forgot-password' | 'settings') => void;
 }
 
 export default function LandingPage({ onNavigate }: LandingPageProps) {
@@ -11,24 +12,39 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       <Navigation onNavigate={onNavigate} currentPage="landing" />
       
       {/* Hero Section */}
-      <section className="bg-[#dedcff] flex-1 px-6 md:px-12 lg:px-24 xl:px-[180px] py-12 md:py-16 lg:py-20">
+      <section className="bg-[#dedcff] flex-1 px-6 md:px-12 lg:px-24 xl:px-[180px] py-12 md:py-16 lg:py-20 overflow-hidden">
         <div className="max-w-[1440px] mx-auto">
           <div className="max-w-3xl">
-            <h1 className="font-['Poppins',sans-serif] font-semibold text-[48px] md:text-[64px] lg:text-[80px] leading-tight md:leading-[90px] text-black mb-6">
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="font-['Poppins',sans-serif] font-semibold text-[48px] md:text-[64px] lg:text-[80px] leading-tight md:leading-[90px] text-black mb-6"
+            >
               Relay<br />
               The Chat App
-            </h1>
+            </motion.h1>
             
-            <p className="font-['Poppins',sans-serif] text-[16px] md:text-[18px] leading-relaxed text-[#2d2d2d] opacity-50 mb-8 md:mb-12 max-w-[466px]">
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              className="font-['Poppins',sans-serif] text-[16px] md:text-[18px] leading-relaxed text-[#2d2d2d] opacity-50 mb-8 md:mb-12 max-w-[466px]"
+            >
               Open Source Real Time Chat Application made using Java Springboot & React JS.
-            </p>
+            </motion.p>
             
-            <button
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(167, 39, 206, 0.3)" }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => onNavigate('register')}
-              className="bg-gradient-to-r from-[#a727ce] to-[#a727ce] hover:from-[#8f1fb3] hover:to-[#8f1fb3] transition-all text-white px-12 md:px-[50px] py-4 md:py-5 rounded-[10px] font-['Poppins',sans-serif] text-[16px] md:text-[18px]"
+              className="bg-gradient-to-r from-[#a727ce] to-[#a727ce] hover:from-[#8f1fb3] hover:to-[#8f1fb3] transition-all duration-300 text-white px-12 md:px-[50px] py-4 md:py-5 rounded-[10px] font-['Poppins',sans-serif] text-[16px] md:text-[18px]"
             >
               Get Started
-            </button>
+            </motion.button>
           </div>
         </div>
       </section>
@@ -38,45 +54,72 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
         <div className="max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-16">
             {/* Feature 1 */}
-            <div className="text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              whileHover={{ scale: 1.05, y: -10 }}
+              className="text-center"
+            >
               <h3 className="font-['Poppins',sans-serif] font-semibold text-[#2d2d2d] text-[18px] leading-[32px] mb-4">
                 Java Springboot
               </h3>
               <p className="font-['Poppins',sans-serif] text-[#2d2d2d] text-[18px] leading-[32px] opacity-50">
-                Spring Boot lets you build and deploy production‑ready Java applications quickly by removing boilerplate and handling configuration automatically
+                Super delicious food. Available in a range of delicious flavors.
               </p>
-            </div>
+            </motion.div>
 
             {/* Feature 2 */}
-            <div className="text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ scale: 1.05, y: -10 }}
+              className="text-center"
+            >
               <h3 className="font-['Poppins',sans-serif] font-semibold text-[#2d2d2d] text-[18px] leading-[32px] mb-4">
                 Interactive UI
               </h3>
               <p className="font-['Poppins',sans-serif] text-[#2d2d2d] text-[18px] leading-[32px] opacity-50">
-                An interactive UI makes a website feel alive, guiding users seamlessly with responsive, engaging experiences
+                Soft toys, chew toys, and rope toys. Strong, interactive, and fun.
               </p>
-            </div>
+            </motion.div>
 
             {/* Feature 3 */}
-            <div className="text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              whileHover={{ scale: 1.05, y: -10 }}
+              className="text-center"
+            >
               <h3 className="font-['Poppins',sans-serif] font-semibold text-[#2d2d2d] text-[18px] leading-[32px] mb-4">
                 Open Source
               </h3>
               <p className="font-['Poppins',sans-serif] text-[#2d2d2d] text-[18px] leading-[32px] opacity-50">
-                Open source gives users the advantage of freedom, transparency, and community‑driven innovation with software they can trust and improve.
-
+                You can get a wide range of great treatments for your dog.
               </p>
-            </div>
+            </motion.div>
 
             {/* Feature 4 */}
-            <div className="text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              whileHover={{ scale: 1.05, y: -10 }}
+              className="text-center"
+            >
               <h3 className="font-['Poppins',sans-serif] font-semibold text-[#2d2d2d] text-[18px] leading-[32px] mb-4">
                 Hosted on Vercel
               </h3>
               <p className="font-['Poppins',sans-serif] text-[#2d2d2d] text-[18px] leading-[32px] opacity-50">
-                Hosted on Vercel ensures fast, reliable, and globally optimized delivery for a seamless user experience
+                It's the right time to groom your dog with a variety of treatments.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
