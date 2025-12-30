@@ -144,7 +144,10 @@ export default function DashboardPage({ onNavigate, activeNav, setActiveNav }: D
             <motion.button
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => setActiveNav('search')}
+              onClick={() => {
+                setActiveNav('search');
+                onNavigate('search');
+              }}
               className={`${activeNav === 'search' ? 'text-[#a727ce]' : 'text-black'} hover:text-[#a727ce] transition-all duration-300`}
             >
               <Search className="w-6 h-6" />
