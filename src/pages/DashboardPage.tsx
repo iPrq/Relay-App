@@ -7,9 +7,12 @@ import { DirectorySidebar } from '../components/dashboard/DirectorySidebar';
 import { DirectoryPanel } from '../components/dashboard/DirectoryPanel';
 
 interface DashboardPageProps {
-  onNavigate: (page: 'landing' | 'login' | 'register' | 'dashboard' | 'forgot-password' | 'settings' | 'home' | 'search') => void;
+  onNavigate: (page: 'landing' | 'login' | 'register' | 'dashboard' | 'forgot-password' | 'settings' | 'home' | 'search' | 'add-friend') => void;
   activeNav: string;
   setActiveNav: (nav: string) => void;
+  contacts: Message[];
+  selectedContact: number | null;
+  onSelectContact: (id: number) => void;
 }
 
 interface Message {
@@ -39,16 +42,6 @@ interface FileItem {
   size: string;
 }
 
-const contacts: Message[] = [
-  { id: 1, name: 'Sarah Johnson', text: 'Haha oh man 🔥', time: '12m' },
-  { id: 2, name: 'Mike Chen', text: 'woohoooo', time: '24m', isActive: true },
-  { id: 3, name: 'Emma Wilson', text: 'Haha that\'s terrifying 😂', time: '1h' },
-  { id: 4, name: 'Alex Turner', text: 'omg, this is amazing', time: '5h' },
-  { id: 5, name: 'Lisa Park', text: 'aww 😍', time: '2d' },
-  { id: 6, name: 'James Rodriguez', text: 'perfect!', time: '1m' },
-  { id: 7, name: 'Sophia Lee', text: 'can\'t wait to see you!', time: '5h' },
-];
-
 const teamMembers: TeamMember[] = [
   { id: 1, name: 'Sarah Johnson', role: 'Coffee enthusiast ☕' },
   { id: 2, name: 'Mike Chen', role: 'Gamer & chill' },
@@ -65,8 +58,7 @@ const files: FileItem[] = [
   { id: 4, name: 'i9.pdf', type: 'PDF', size: '9mb' },
 ];
 
-export default function DashboardPage({ onNavigate, activeNav, setActiveNav }: DashboardPageProps) {
-  const [selectedContact, setSelectedContact] = useState(2);
+export default function DashboardPage({ onNavigate, activeNav, setActiveNav, contacts, selectedContact, onSelectContact }: DashboardPageProps) {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
     { id: 1, content: 'Message content goes here', isSent: false },
     { id: 2, content: 'Message content goes here', isSent: false },
@@ -93,7 +85,7 @@ export default function DashboardPage({ onNavigate, activeNav, setActiveNav }: D
   };
 
   const handleSelectContact = (contactId: number) => {
-    setSelectedContact(contactId);
+    onSelectContact(contactId);
     // In a real app, you would load messages for this contact
     // For now, we'll keep the same messages
   };
@@ -110,30 +102,39 @@ export default function DashboardPage({ onNavigate, activeNav, setActiveNav }: D
         contacts={contacts}
         selectedContact={selectedContact}
         onSelectContact={handleSelectContact}
+        onNavigate={onNavigate}
       />
 
-      <ChatArea
-        selectedContact={selectedContact}
-        contacts={contacts}
-        chatMessages={chatMessages}
-        onSendMessage={handleSendMessage}
-        onToggleDirectory={() => setIsDirectoryOpen(!isDirectoryOpen)}
-      />
+      {/* Chat Area - Only show when a contact is selected */}
+      {selectedContact && (
+        <ChatArea
+          selectedContact={selectedContact}
+          contacts={contacts}
+          chatMessages={chatMessages}
+          onSendMessage={handleSendMessage}
+          onToggleDirectory={() => setIsDirectoryOpen(!isDirectoryOpen)}
+        />
+      )}
 
-      {/* Right Sidebar - Directory (Always visible on XL screens) */}
-      <div className="hidden xl:flex">
-        <DirectorySidebar
+      {/* Right Sidebar - Directory (Only visible when a contact is selected on XL screens) */}
+      {selectedContact && (
+        <div className="hidden xl:flex">
+          <DirectorySidebar
+            teamMembers={teamMembers}
+            files={files}
+          />
+        </div>
+      )}
+
+      {/* Directory Panel - Only show when a contact is selected */}
+      {selectedContact && (
+        <DirectoryPanel
+          isOpen={isDirectoryOpen}
+          onClose={() => setIsDirectoryOpen(false)}
           teamMembers={teamMembers}
           files={files}
         />
-      </div>
-
-      <DirectoryPanel
-        isOpen={isDirectoryOpen}
-        onClose={() => setIsDirectoryOpen(false)}
-        teamMembers={teamMembers}
-        files={files}
-      />
+      )}
     </div>
   );
 }

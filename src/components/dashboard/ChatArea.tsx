@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Phone, Users, Paperclip, Send } from 'lucide-react';
 
@@ -9,7 +9,7 @@ interface ChatMessage {
 }
 
 interface ChatAreaProps {
-  selectedContact: number;
+  selectedContact: number | null;
   contacts: { id: number; name: string }[];
   chatMessages: ChatMessage[];
   onSendMessage: (message: string) => void;
@@ -18,8 +18,17 @@ interface ChatAreaProps {
 
 export function ChatArea({ selectedContact, contacts, chatMessages, onSendMessage, onToggleDirectory }: ChatAreaProps) {
   const [messageText, setMessageText] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const selectedContactData = contacts.find(c => c.id === selectedContact);
+  const selectedContactData = selectedContact ? contacts.find(c => c.id === selectedContact) : null;
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatMessages]);
 
   const handleSendMessage = () => {
     if (messageText.trim()) {
@@ -43,7 +52,7 @@ export function ChatArea({ selectedContact, contacts, chatMessages, onSendMessag
           <div className="w-10 h-10 bg-[#d8d8d8] rounded-full border-2 border-white" />
           <div>
             <p className="font-['Poppins',sans-serif] font-semibold text-[18px]">
-              {selectedContactData?.name || 'Florencio Dorrance'}
+              {selectedContactData?.name || 'Select a conversation'}
             </p>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-[#68D391] rounded-full" />
@@ -102,6 +111,7 @@ export function ChatArea({ selectedContact, contacts, chatMessages, onSendMessag
             </div>
           </motion.div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Message Input */}
