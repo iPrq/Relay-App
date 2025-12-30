@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { LogoIcon } from '../components/Logo';
 import { 
   Home, 
   MessageSquare, 
@@ -19,10 +20,10 @@ import {
   Plus,
   ChevronDown,
   Download
-} from 'lucide-react@0.487.0';
+} from 'lucide-react';
 
 interface DashboardPageProps {
-  onNavigate: (page: 'landing' | 'login' | 'register' | 'dashboard' | 'forgot-password' | 'settings' | 'home') => void;
+  onNavigate: (page: 'landing' | 'login' | 'register' | 'dashboard' | 'forgot-password' | 'settings' | 'home' | 'search') => void;
   activeNav: string;
   setActiveNav: (nav: string) => void;
 }
@@ -117,7 +118,7 @@ export default function DashboardPage({ onNavigate, activeNav, setActiveNav }: D
             className="bg-[#a727ce] rounded-[14px] w-[56px] h-[56px] flex items-center justify-center cursor-pointer" 
             onClick={() => onNavigate('landing')}
           >
-            <span className="font-bold text-[21px] text-[#dedcff]">Q</span>
+            <LogoIcon />
           </motion.div>
 
           {/* Nav Icons */}

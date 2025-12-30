@@ -1,4 +1,5 @@
 import { Home, MessageSquare, Search, Calendar, Settings } from 'lucide-react';
+import { LogoIcon } from './Logo';
 
 interface SidebarProps {
   onSelectSection: (section: string) => void;
@@ -7,10 +8,8 @@ interface SidebarProps {
 
 function Logo() {
   return (
-    <div className="bg-[#a727ce] overflow-clip relative rounded-[14px] shrink-0 size-[56px]">
-      <p className="absolute font-bold h-[31.5px] leading-[1.5] left-[20.13px] text-[#dedcff] text-[21px] top-[12.25px] w-[15.75px]">
-        Q
-      </p>
+    <div className="bg-[#a727ce] overflow-clip relative rounded-[14px] shrink-0 size-[56px] flex items-center justify-center">
+      <LogoIcon />
     </div>
   );
 }

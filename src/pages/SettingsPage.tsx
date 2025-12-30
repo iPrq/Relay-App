@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { LogoIcon } from '../components/Logo';
 import { Home, MessageSquare, Search, Calendar, Settings, User, CreditCard, Package, Bell, Lock, Camera } from 'lucide-react';
 
 interface SettingsPageProps {
@@ -28,7 +29,7 @@ export default function SettingsPage({ onNavigate }: SettingsPageProps) {
             className="bg-[#a727ce] rounded-[14px] w-[56px] h-[56px] flex items-center justify-center cursor-pointer" 
             onClick={() => onNavigate('landing')}
           >
-            <span className="font-bold text-[21px] text-[#dedcff]">R</span>
+            <LogoIcon />
           </motion.div>
 
           {/* Nav Icons */}

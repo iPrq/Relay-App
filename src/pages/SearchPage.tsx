@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import { LogoIcon } from '../components/Logo';
 import { 
   Home, 
   MessageSquare, 
@@ -93,7 +94,7 @@ export default function SearchPage({ onNavigate, activeNav, setActiveNav }: Sear
             className="bg-white rounded-[14px] w-[56px] h-[56px] flex items-center justify-center cursor-pointer shadow-lg" 
             onClick={() => onNavigate('landing')}
           >
-            <span className="font-bold text-[21px] text-[#a727ce]">Q</span>
+            <LogoIcon />
           </motion.div>
 
           {/* Nav Icons */}
