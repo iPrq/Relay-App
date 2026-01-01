@@ -2,6 +2,7 @@ import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import { registerUser } from '../api/login';
 
 interface RegisterPageProps {
   onNavigate: (page: 'landing' | 'login' | 'register' | 'dashboard' | 'forgot-password' | 'settings' | 'home') => void;
@@ -9,17 +10,28 @@ interface RegisterPageProps {
 
 export default function RegisterPage({ onNavigate }: RegisterPageProps) {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     email: '',
     password: '',
     agreeToTerms: false
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Register submitted:', formData);
-    // Navigate to home page after registration
-    onNavigate('home');
+    setIsLoading(true);
+    setError('');
+
+    const result = await registerUser(formData.email, formData.username, formData.password, formData.agreeToTerms);
+    setIsLoading(false);
+
+    if (result.success) {
+      // Navigate to home page after registration
+      onNavigate('home');
+    } else {
+      setError(result.message || 'Registration failed');
+    }
   };
 
   return (
@@ -59,8 +71,8 @@ export default function RegisterPage({ onNavigate }: RegisterPageProps) {
               </label>
               <input
                 type="text"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                value={formData.username}
+                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                 placeholder="Enter your username"
                 className="w-full bg-white border border-[#d9d9d9] rounded-[8px] px-4 py-3 font-['Inter',sans-serif] text-[16px] text-[#1e1e1e] placeholder:text-[#b3b3b3] focus:outline-none focus:ring-2 focus:ring-[#a727ce] transition-all duration-300"
               />
@@ -144,17 +156,29 @@ export default function RegisterPage({ onNavigate }: RegisterPageProps) {
               </label>
             </motion.div>
 
+            {/* Error Message */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-red-500 text-center mb-4 font-['Inter',sans-serif] text-[14px]"
+              >
+                {error}
+              </motion.div>
+            )}
+
             {/* Submit Button */}
             <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.6 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: isLoading ? 1 : 1.02 }}
+              whileTap={{ scale: isLoading ? 1 : 0.98 }}
               type="submit"
-              className="w-full bg-[#a727ce] hover:bg-[#8f1fb3] transition-all duration-300 text-white border border-[#2c2c2c] rounded-[8px] px-4 py-3 font-['Inter',sans-serif] text-[16px]"
+              disabled={isLoading}
+              className="w-full bg-[#a727ce] hover:bg-[#8f1fb3] disabled:bg-gray-400 disabled:cursor-not-allowed transition-all duration-300 text-white border border-[#2c2c2c] rounded-[8px] px-4 py-3 font-['Inter',sans-serif] text-[16px]"
             >
-              Register
+              {isLoading ? 'Registering...' : 'Register'}
             </motion.button>
           </motion.form>
         </motion.div>

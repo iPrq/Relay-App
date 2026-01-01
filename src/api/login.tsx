@@ -47,4 +47,31 @@ async function requestPasswordReset(email: string): Promise<boolean> {
   }
 }
 
-export { validateLogin, requestPasswordReset };
+async function registerUser(email: string, username: string, password: string, agreeToTerms: boolean): Promise<{ success: boolean; message?: string }> {
+  try {
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        username,
+        password,
+        agreeToTerms,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return { success: data.success || false, message: data.message };
+  } catch (error) {
+    console.error('Registration error:', error);
+    return { success: false, message: 'Registration failed' };
+  }
+}
+
+export { validateLogin, requestPasswordReset, registerUser };
